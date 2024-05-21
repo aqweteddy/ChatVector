@@ -34,6 +34,20 @@ CHAT_VECTOR_PATH=ckpt_tv/llama3-8b-instruct
 python extract_chat_vector.py $BASE_MODEL_PATH $CHAT_MODEL_PATH $CHAT_VECTOR_PATH
 ```
 
+### Adding the Chat Vector
+
+To add the chat vector to the model, use the following command:
+
+```bash
+CP_MODEL_PATH=ckpt/llama3-8b_cp
+OUTPUT_PATH=ckpt/llama3-8b-cp_cv-llama3
+
+python add_chat_vector.py $CP_MODEL_PATH "['$CHAT_VECTOR_PATH']" $OUTPUT_PATH \
+--ratio "[1]"  # chat vector ratio
+```
+
+If you encounter issues with outputting the target language, please lower the `ratio` setting.
+
 ### Skip Embedding
 
 In cases where you need to continue pretraining with extended word embeddings, you can use the `--skip_embed` option to avoid adding the embedding and `lm_head` layer:
