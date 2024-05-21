@@ -6,11 +6,12 @@ import torch
 from transformers import (AutoModelForCausalLM, AutoTokenizer,
                           pipeline)
 
+
 def get_pipeline(path, tokenizer):
     model = AutoModelForCausalLM.from_pretrained(
-        path, 
-        torch_dtype=torch.float16, 
-        device_map='auto', 
+        path,
+        torch_dtype=torch.float16,
+        device_map='auto',
         trust_remote_code=True)
 
     print('Model loaded')
@@ -26,6 +27,7 @@ def get_pipeline(path, tokenizer):
 
 SYS_PROMPT = None
 
+
 def main(model_path: str,
          sys_prompt: str = SYS_PROMPT,
          max_new_tokens: int = 512,
@@ -33,7 +35,7 @@ def main(model_path: str,
 
     print('model_path:', model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_path)
-    
+
     tokenizer.pad_token = tokenizer.eos_token
     tokenizer.pad_token_id = tokenizer.eos_token_id
     print('bos_token:', tokenizer.bos_token)
@@ -42,11 +44,11 @@ def main(model_path: str,
     print('eos_token_id:', tokenizer.eos_token_id)
 
     pipe = get_pipeline(model_path, tokenizer)
-    
+
     messages = []
     if sys_prompt is not None:
         messages.append({"role": 'system', 'content': sys_prompt})
-    
+
     while 1:
         input_ = input('\033[94mEnter instruction: ')
         if input_ == 'clear':
