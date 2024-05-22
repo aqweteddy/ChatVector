@@ -16,7 +16,11 @@ To install the required packages, run the following commands:
 
 ```bash
 CUDA=cu118 # change to your CUDA version
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/$CUDA
+pip install torch --index-url https://download.pytorch.org/whl/$CUDA
+
+# If you do not need to use `chat.py`, you can install the no-cuda torch version.
+pip install torch
+
 pip install transformers fire
 ```
 
